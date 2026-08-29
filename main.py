@@ -2,6 +2,7 @@
 import sys
 
 from analyzer.analyzer import analyze_code
+from analyzer.report import calculate_health_score, count_issues
 
 
 def main():
@@ -21,8 +22,20 @@ def main():
 
     results = analyze_code(code)
 
+    score = calculate_health_score(results)
+    counts = count_issues(results)
+
     print("\nCodePulse Analysis")
     print("------------------")
+
+    print(f"Health Score: {score}/100")
+
+    print(f"High: {counts['High']}")
+    print(f"Medium: {counts['Medium']}")
+    print(f"Low: {counts['Low']}")
+
+    print("\nIssues")
+    print("------")
 
     if not results:
         print("No issues found.")
@@ -39,3 +52,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
