@@ -1,6 +1,6 @@
 
 import ast
-from complexity import calculate_complexity
+from .complexity import calculate_complexity
 
 
 def analyze_code(code):
