@@ -1,3 +1,4 @@
+
 from analyzer.analyzer import analyze_code
 
 
@@ -38,6 +39,10 @@ def check_number(value):
     if value < 0:
         return False
 
+    for number in range(5):
+        if number == value:
+            return True
+
     return None
 """
 
@@ -50,7 +55,10 @@ def check_number(value):
     ]
 
     assert len(complexity_issues) == 1
+    assert complexity_issues[0]["severity"] == "Medium"
     assert "check_number" in complexity_issues[0]["message"]
+
+
 def test_syntax_error_detection():
     code = """
 def broken_function(
