@@ -25,20 +25,28 @@ def main():
     score = calculate_health_score(results)
     counts = count_issues(results)
 
-    print("\nCodePulse Analysis")
-    print("------------------")
+    print("\n========================================")
+    print("           CODEPULSE REPORT")
+    print("========================================")
 
-    print(f"Health Score: {score}/100")
+    print(f"\nFile: {file_path}")
 
-    print(f"High: {counts['High']}")
-    print(f"Medium: {counts['Medium']}")
-    print(f"Low: {counts['Low']}")
+    print("\nHealth Score")
+    print("------------")
+    print(f"{score}/100")
+
+    print("\nSeverity Summary")
+    print("----------------")
+    print(f"High:     {counts['High']}")
+    print(f"Medium:   {counts['Medium']}")
+    print(f"Low:      {counts['Low']}")
 
     print("\nIssues")
     print("------")
 
     if not results:
         print("No issues found.")
+        print("\n========================================")
         return
 
     for issue in results:
@@ -55,6 +63,8 @@ def main():
         )
 
         print()
+
+    print("========================================")
 
 
 if __name__ == "__main__":
