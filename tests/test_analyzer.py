@@ -51,4 +51,28 @@ def check_number(value):
 
     assert len(complexity_issues) == 1
     assert "check_number" in complexity_issues[0]["message"]
-    
+def test_syntax_error_detection():
+    code = """
+def broken_function(
+    print("Hello")
+"""
+
+    issues = analyze_code(code)
+
+    assert len(issues) == 1
+    assert issues[0]["type"] == "Syntax Error"
+    assert issues[0]["severity"] == "High"
+
+
+def test_health_score():
+    from analyzer.report import calculate_health_score
+
+    issues = [
+        {"severity": "High"},
+        {"severity": "Medium"},
+        {"severity": "Low"},
+    ]
+
+    score = calculate_health_score(issues)
+
+    assert score == 65
