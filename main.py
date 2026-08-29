@@ -49,7 +49,13 @@ def main():
             f"{issue['message']}"
         )
 
+        print(
+            f"Recommendation: "
+            f"{issue['recommendation']}"
+        )
+
+        print()
+
 
 if __name__ == "__main__":
     main()
-

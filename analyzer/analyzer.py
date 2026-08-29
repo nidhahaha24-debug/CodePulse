@@ -14,7 +14,8 @@ def analyze_code(code):
             "type": "Syntax Error",
             "severity": "High",
             "line": error.lineno,
-            "message": error.msg
+            "message": error.msg,
+            "recommendation": "Fix the syntax error before running the program."
         })
         return issues
 
@@ -37,12 +38,16 @@ def analyze_code(code):
 
         # Detect print statements
         if isinstance(node, ast.Call):
+
             if isinstance(node.func, ast.Name) and node.func.id == "print":
                 issues.append({
                     "type": "Code Smell",
                     "severity": "Low",
                     "line": node.lineno,
-                    "message": "Debug print statement found."
+                    "message": "Debug print statement found.",
+                    "recommendation": (
+                        "Remove debug print statements before production."
+                    )
                 })
 
     # Detect unused variables
@@ -53,7 +58,12 @@ def analyze_code(code):
                 "type": "Code Smell",
                 "severity": "Low",
                 "line": line,
-                "message": f"Variable '{variable}' is assigned but never used."
+                "message": (
+                    f"Variable '{variable}' is assigned but never used."
+                ),
+                "recommendation": (
+                    "Remove the unused variable if it is not required."
+                )
             })
 
     # Run complexity analysis
@@ -77,6 +87,9 @@ def analyze_code(code):
             "message": (
                 f"Function '{result['function']}' has "
                 f"cyclomatic complexity of {complexity}."
+            ),
+            "recommendation": (
+                "Consider breaking this function into smaller functions."
             )
         })
 
@@ -117,3 +130,11 @@ print(name)
             f"Line {issue['line']} - "
             f"{issue['message']}"
         )
+
+        print(
+            f"Recommendation: "
+            f"{issue['recommendation']}"
+        )
+
+        print()
+
