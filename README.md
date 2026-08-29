@@ -1,125 +1,157 @@
 # CodePulse 🔍
 
-**CodePulse** is a Python-based static code analysis tool that automatically examines source code to identify potential code-quality issues, syntax errors, and complex functions.
+**CodePulse** is a lightweight Python-based static code analysis tool that scans Python files and identifies common code-quality issues.
 
-The project is designed to help developers detect common problems early and understand the maintainability of their code.
+It uses Python's **AST (Abstract Syntax Tree)** to analyze source code without executing it.
 
-## 🚀 Features
+## ✨ Features
 
-* 🔴 **Syntax Error Detection**
+* 🔎 Scan individual Python files or entire folders
+* 🚫 Exclude test files from production analysis
+* 🐛 Detect debug `print()` statements
+* 🗑️ Detect unused variables
+* ⚠️ Detect syntax errors
+* 📊 Calculate cyclomatic complexity
+* 🎯 Classify issues by severity
+* 💯 Generate health scores
+* 📋 Generate a project-wide summary
+* 🧪 Automated tests using pytest
 
-  * Identifies invalid Python syntax without crashing the analyzer.
+## 🛠️ Tech Stack
 
-* 🟡 **Code Smell Detection**
+* **Python 3**
+* **AST (Abstract Syntax Tree)**
+* **Pytest**
+* **Git & GitHub**
 
-  * Detects debug `print()` statements.
-  * Identifies variables that are assigned but never used.
-
-* 📊 **Cyclomatic Complexity Analysis**
-
-  * Calculates the complexity of individual functions.
-  * Flags functions with higher complexity.
-
-* 🧩 **AST-Based Analysis**
-
-  * Uses Python's Abstract Syntax Tree (AST) to analyze code structure rather than relying only on text matching.
-
-## 🏗️ Project Structure
+## 📁 Project Structure
 
 ```text
 CodePulse/
 │
 ├── analyzer/
 │   ├── analyzer.py
-│   └── complexity.py
+│   ├── complexity.py
+│   ├── report.py
+│   └── scanner.py
+│
+├── tests/
+│   └── test_analyzer.py
 │
 ├── main.py
-├── .gitignore
+├── test_code.py
 └── README.md
 ```
 
-## ⚙️ How It Works
+## 🚀 Getting Started
 
-```text
-Python Source Code
-        │
-        ▼
-   AST Parser
-        │
-        ▼
-┌───────────────────────┐
-│   CodePulse Analyzer  │
-├───────────────────────┤
-│ Syntax Analysis       │
-│ Code Smell Detection  │
-│ Complexity Analysis   │
-└───────────┬───────────┘
-            │
-            ▼
-      Analysis Report
-```
-
-## 🛠️ Technologies
-
-* Python 3
-* Python AST
-* Git
-* GitHub
-* Visual Studio Code
-
-## ▶️ Running the Project
-
-Clone the repository:
+### 1. Clone the repository
 
 ```bash
-git clone <your-repository-url>
-```
-
-Navigate to the project:
-
-```bash
+git clone <your-github-repository-url>
 cd CodePulse
 ```
 
-Run the analyzer:
+### 2. Install dependencies
 
 ```bash
-python analyzer/analyzer.py
+pip install pytest
 ```
 
-## 📌 Example
+### 3. Run CodePulse
 
-Given code containing nested conditions and debug statements, CodePulse can produce output such as:
+Analyze the entire project:
+
+```bash
+python main.py .
+```
+
+Or analyze a specific Python file:
+
+```bash
+python main.py test_code.py
+```
+
+## 📊 Example
+
+CodePulse produces individual file reports:
 
 ```text
-CodePulse Analysis
-------------------
-Low: Code Smell - Line 16 - Debug print statement found.
-Low: Code Smell - Line 10 - Debug print statement found.
-Low: Code Smell - Line 7 - Debug print statement found.
-Low: Complexity - Line 2 - Function 'check_user' has cyclomatic complexity of 4.
+========================================
+           CODEPULSE REPORT
+========================================
+
+File: main.py
+
+Health Score
+------------
+100/100
+
+Severity Summary
+----------------
+High:     0
+Medium:   0
+Low:      0
+
+Issues
+------
+No issues found.
 ```
+
+It also generates a project-wide summary showing:
+
+* Total files analyzed
+* Total issues
+* High/Medium/Low issue counts
+* Average health score
+* Best-performing file
+* File needing the most attention
+
+## 🧪 Testing
+
+Run the complete test suite:
+
+```bash
+python -m pytest
+```
+
+Expected result:
+
+```text
+5 passed
+```
+
+## 🎯 Severity Levels
+
+| Severity | Complexity | Meaning                                 |
+| -------- | ---------: | --------------------------------------- |
+| Low      |        3–4 | Minor complexity/code-quality concern   |
+| Medium   |        5–9 | Requires attention                      |
+| High     |        10+ | Significant complexity or serious issue |
+
+Complexity below 3 is considered acceptable.
+
+## 💡 Why CodePulse?
+
+Code quality problems are often discovered only after code becomes difficult to maintain.
+
+CodePulse provides a simple way to identify common issues early and gives developers an easy-to-understand **health score** for their Python code.
 
 ## 🔮 Future Improvements
 
-The project is planned to evolve into a more complete developer-focused code analysis platform.
-
-Planned improvements include:
-
-* Security vulnerability detection
-* More advanced code-quality rules
-* Function-level metrics
-* Maintainability scoring
-* Automated test generation
-* REST API for code analysis
+* HTML report generation
+* JSON report export
+* More AST-based code smells
+* Duplicate-code detection
+* Maintainability metrics
+* Configurable analysis rules
+* CI/CD integration
+* GitHub Actions support
 * Web-based dashboard
-* GitHub repository integration
-* Automated analysis through CI/CD pipelines
 
-## 🎯 Project Goal
+## 👩‍💻 Author
 
-The long-term goal of CodePulse is to provide developers with an accessible automated code-review assistant that can analyze code, identify potential problems, and provide actionable recommendations.
+**Nidha Hussain**
 
----
-
-**Built with Python 🐍**
+Computer Science Engineering Student
+Interested in Cloud Computing, Software Engineering, DevOps and AI.
