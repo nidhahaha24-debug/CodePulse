@@ -1,5 +1,6 @@
 
 import ast
+
 from .complexity import calculate_complexity
 
 
@@ -38,6 +39,8 @@ def get_output_function_lines(tree):
     output_functions = {
         "main",
         "analyze_file",
+        "print_project_summary",
+        "create_project_summary",
     }
 
     for node in ast.walk(tree):
@@ -88,7 +91,6 @@ def analyze_variables(tree):
     used_variables = set()
 
     for node in ast.walk(tree):
-
         if not isinstance(node, ast.Name):
             continue
 
@@ -99,7 +101,6 @@ def analyze_variables(tree):
             used_variables.add(node.id)
 
     for variable, line in assigned_variables.items():
-
         if variable not in used_variables:
             issues.append({
                 "type": "Code Smell",
@@ -123,7 +124,6 @@ def analyze_complexity(code):
     complexity_results = calculate_complexity(code)
 
     for result in complexity_results:
-
         complexity = result["complexity"]
 
         # Complexity below 5 is considered acceptable.
@@ -164,7 +164,9 @@ def analyze_code(code):
             "severity": "High",
             "line": error.lineno,
             "message": error.msg,
-            "recommendation": "Fix the syntax error before running the program."
+            "recommendation": (
+                "Fix the syntax error before running the program."
+            )
         })
         return issues
 
@@ -172,11 +174,16 @@ def analyze_code(code):
     main_block_lines = get_main_block_lines(tree)
     output_function_lines = get_output_function_lines(tree)
 
-    ignored_print_lines = main_block_lines | output_function_lines
+    ignored_print_lines = (
+        main_block_lines | output_function_lines
+    )
 
     # Detect debug print statements.
     issues.extend(
-        analyze_print_statements(tree, ignored_print_lines)
+        analyze_print_statements(
+            tree,
+            ignored_print_lines
+        )
     )
 
     # Detect unused variables.
@@ -192,7 +199,6 @@ def analyze_code(code):
     return issues
 
 
-# Test CodePulse
 if __name__ == "__main__":
 
     sample_code = """
@@ -219,7 +225,6 @@ print(name)
     print("------------------")
 
     for issue in results:
-
         print(
             f"{issue['severity']}: "
             f"{issue['type']} - "

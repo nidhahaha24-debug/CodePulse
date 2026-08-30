@@ -8,6 +8,14 @@ EXCLUDED_DIRECTORIES = {
     "tests",
 }
 
+EXCLUDED_FILES = {
+    "main.py",
+    "analyzer.py",
+    "complexity.py",
+    "report.py",
+    "scanner.py",
+}
+
 
 def find_python_files(path):
     target = Path(path)
@@ -25,6 +33,9 @@ def find_python_files(path):
                 excluded in file.parts
                 for excluded in EXCLUDED_DIRECTORIES
             ):
+                continue
+
+            if file.name in EXCLUDED_FILES:
                 continue
 
             python_files.append(file)

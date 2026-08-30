@@ -1,21 +1,23 @@
+
 # CodePulse 🔍
 
-**CodePulse** is a lightweight Python-based static code analysis tool that scans Python files and identifies common code-quality issues.
+**CodePulse** is a lightweight Python-based static code analysis tool that scans Python source code and identifies common code-quality issues.
 
-It uses Python's **AST (Abstract Syntax Tree)** to analyze source code without executing it.
+It uses Python's **AST (Abstract Syntax Tree)** to analyze source code without executing it, helping developers identify potential problems early and understand the overall health of their code.
 
 ## ✨ Features
 
 * 🔎 Scan individual Python files or entire folders
-* 🚫 Exclude test files from production analysis
+* 🚫 Exclude test files and CodePulse's internal files during project scanning
 * 🐛 Detect debug `print()` statements
 * 🗑️ Detect unused variables
 * ⚠️ Detect syntax errors
 * 📊 Calculate cyclomatic complexity
 * 🎯 Classify issues by severity
-* 💯 Generate health scores
-* 📋 Generate a project-wide summary
-* 🧪 Automated tests using pytest
+* 💯 Calculate code health scores
+* 📋 Generate project-wide summaries
+* 📦 Export analysis results as JSON
+* 🧪 Automated testing with pytest
 
 ## 🛠️ Tech Stack
 
@@ -23,6 +25,16 @@ It uses Python's **AST (Abstract Syntax Tree)** to analyze source code without e
 * **AST (Abstract Syntax Tree)**
 * **Pytest**
 * **Git & GitHub**
+
+## 📸 Screenshots
+
+### CLI Analysis
+
+![CodePulse CLI Analysis](screenshots/cli-analysis.png)
+
+### JSON Output
+
+![CodePulse JSON Output](screenshots/json-output.png)
 
 ## 📁 Project Structure
 
@@ -38,8 +50,13 @@ CodePulse/
 ├── tests/
 │   └── test_analyzer.py
 │
+├── screenshots/
+│   ├── cli-analysis.png
+│   └── json-output.png
+│
 ├── main.py
 ├── test_code.py
+├── requirements.txt
 └── README.md
 ```
 
@@ -55,57 +72,75 @@ cd CodePulse
 ### 2. Install dependencies
 
 ```bash
-pip install pytest
+pip install -r requirements.txt
 ```
 
 ### 3. Run CodePulse
 
-Analyze the entire project:
+Analyze an entire project:
 
 ```bash
 python main.py .
 ```
 
-Or analyze a specific Python file:
+Analyze a specific Python file:
 
 ```bash
 python main.py test_code.py
 ```
 
-## 📊 Example
+Generate JSON output:
 
-CodePulse produces individual file reports:
+```bash
+python main.py . --json
+```
+
+## 📊 Example Output
 
 ```text
 ========================================
            CODEPULSE REPORT
 ========================================
 
-File: main.py
+File: test_code.py
 
 Health Score
 ------------
-100/100
+70/100
 
 Severity Summary
 ----------------
 High:     0
-Medium:   0
-Low:      0
+Medium:   1
+Low:      1
 
 Issues
 ------
-No issues found.
+Medium: Complexity - Function 'example'
+has cyclomatic complexity of 6.
+
+Recommendation:
+Consider breaking this function into smaller functions.
 ```
 
-It also generates a project-wide summary showing:
+For project analysis, CodePulse also provides:
 
 * Total files analyzed
 * Total issues
-* High/Medium/Low issue counts
+* Severity summary
 * Average health score
 * Best-performing file
 * File needing the most attention
+
+## 📦 JSON Output
+
+CodePulse supports machine-readable JSON output:
+
+```bash
+python main.py . --json
+```
+
+The JSON report contains individual file results, health scores, issue details, severity counts, and a project-wide summary.
 
 ## 🧪 Testing
 
@@ -123,24 +158,25 @@ Expected result:
 
 ## 🎯 Severity Levels
 
-| Severity | Complexity | Meaning                                 |
-| -------- | ---------: | --------------------------------------- |
-| Low      |        3–4 | Minor complexity/code-quality concern   |
-| Medium   |        5–9 | Requires attention                      |
-| High     |        10+ | Significant complexity or serious issue |
+| Severity | Complexity | Meaning                                  |
+| -------- | ---------: | ---------------------------------------- |
+| Low      |        3–4 | Minor complexity or code-quality concern |
+| Medium   |        5–9 | Requires attention                       |
+| High     |        10+ | Significant complexity or serious issue  |
 
-Complexity below 3 is considered acceptable.
+Complexity below 5 is considered acceptable.
 
 ## 💡 Why CodePulse?
 
-Code quality problems are often discovered only after code becomes difficult to maintain.
+Code-quality problems are often discovered only after code becomes difficult to maintain.
 
 CodePulse provides a simple way to identify common issues early and gives developers an easy-to-understand **health score** for their Python code.
+
+The goal is to make static analysis simple, lightweight, and accessible without executing the analyzed code.
 
 ## 🔮 Future Improvements
 
 * HTML report generation
-* JSON report export
 * More AST-based code smells
 * Duplicate-code detection
 * Maintainability metrics
@@ -154,4 +190,5 @@ CodePulse provides a simple way to identify common issues early and gives develo
 **Nidha Hussain**
 
 Computer Science Engineering Student
-Interested in Cloud Computing, Software Engineering, DevOps and AI.
+
+Interested in Cloud Computing, Software Engineering, DevOps, and AI.
